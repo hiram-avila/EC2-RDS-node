@@ -1,0 +1,14 @@
+import app from '../app'
+import request from 'supertest'
+
+ describe('GET / tasks', () => {
+    
+    test('should respond woth a 200 status code', async() => {
+       const response = await request(app).get('/tasks').send()
+       expect(response.statusCode).toBe(200)
+    })
+
+    test('should response an array', async() => {
+         
+    })
+ })
