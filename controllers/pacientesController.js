@@ -1,24 +1,69 @@
 // pacienteController.js
 import db from '../conexionMySQL.js';
 
-const registrarPaciente = (req, res) => {
-  const { nombre, correo, edad } = req.body;
+import bcrypt  from'bcrypt';
+import jwt from 'jsonwebtoken'; // Importa jwt si estás utilizando ES6 modules
 
-  // Validar los datos del paciente (agregar validación adicional según sea necesario)
-  // Insertar el paciente en la base de datos
-  const sql = 'INSERT INTO usuarios (nombre, correo, edad) VALUES (?, ?, ?)';
-  const values = [nombre, correo, edad];
 
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al registrar al paciente: ', err);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    } else {
+const registrarPaciente = async (req, res) => {
+    try {
+      const { nombre, correo, edad, contrasena } = req.body;
+  
+      // Generar un salt y encriptar la contraseña de forma asincrónica
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(contrasena, salt);
+  
+      // Insertar el usuario en la base de datos con la contraseña encriptada
+      const sql = 'INSERT INTO usuarios (nombre, correo, edad, contrasena) VALUES (?, ?, ?, ?)';
+      const values = [nombre, correo, edad, hash];
+  
+     await db.query(sql, values);
+  
       console.log('Paciente registrado con éxito');
       res.json({ message: 'Paciente registrado con éxito' });
+    } catch (error) {
+      console.error('Error al registrar al paciente: ', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
     }
-  });
-}
+  };
+
+    const iniciarSesion = async (req, res) => {
+        const { correo, contrasena } = req.body;
+    
+        console.log(correo, contrasena);
+        
+        try {
+        // Buscar al usuario en la base de datos por su correo electrónico
+        const sql = 'SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?';
+        const result = await db.query(sql, [correo]);
+    
+        if (!result || result.length === 0) {
+            return res.status(403).json({ message: 'Usuario no encontrado' });
+        }
+    
+        const usuario = await result[0]; // Obtén el primer resultado
+        console.log('estoy en usuario')
+        console.log(usuario);
+        const contrasenaValida = await bcrypt.compare(contrasena, usuario[0].contrasena);
+    
+        if (contrasenaValida) {
+            // Las credenciales son válidas, generamos un token de autenticación
+            const token = jwt.sign({ id: usuario.id, nombre: usuario.nombre }, 'secreto', { expiresIn: '1h' });
+            console.log('me ejecuté');
+            res.json({
+                token,
+                msg:'usuario logeado'
+                });
+        } else {
+            // Credenciales inválidas
+            res.status(401).json({ error: 'Credenciales inválidas' });
+        }
+        } catch (error) {
+        console.error('Error al autenticar al usuario:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    };
+
 
 const eliminarUsuario = (req, res) => {
     const { id } = req.params; // Captura el ID desde los parámetros de la URL
@@ -42,25 +87,9 @@ const eliminarUsuario = (req, res) => {
     });
   };
 
-  const buscarUsuarios = (req, res) => {
-    const { nombre } = req.query; // Captura el parámetro de consulta 'nombre'
   
-    // Realiza una consulta SQL para buscar usuarios por nombre
-    const sql = 'SELECT * FROM usuarios WHERE nombre LIKE ?';
-    const searchTerm = `%${nombre}%`; // Usamos % para buscar coincidencias parciales
-  
-    db.query(sql, [searchTerm], (err, result) => {
-      if (err) {
-        console.error('Error al buscar usuarios: ', err);
-        res.status(500).json({ error: 'Error interno del servidor' });
-      } else {
-        // Retorna la lista de usuarios encontrados
-        res.json(result);
-      }
-    });
-  };
   
 
 // Otras funciones de controlador relacionadas con pacientes aquí...
 
-export { registrarPaciente, eliminarUsuario, buscarUsuarios }; // Exporta directamente la función en lugar de un objeto
+export { registrarPaciente, eliminarUsuario, iniciarSesion }; // Exporta directamente la función en lugar de un objeto

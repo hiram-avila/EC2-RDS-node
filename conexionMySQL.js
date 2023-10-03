@@ -1,7 +1,7 @@
 // conexionMySQL.js
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 
-const db = mysql.createConnection({
+const db = await mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
@@ -9,12 +9,6 @@ const db = mysql.createConnection({
   port: 3306
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error('Error de conexión a la base de datos MySQL: ', err);
-  } else {
-    console.log('Conexión exitosa a la base de datos MySQL');
-  }
-});
+// No es necesario llamar a db.connect() en este caso
 
 export default db;

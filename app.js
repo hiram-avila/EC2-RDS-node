@@ -7,13 +7,7 @@ app.use(express.json());
 
 // Resto de la configuración de Express...
 
-app.get("/ping", (req, res) =>{
-   res.send("pong");
-})
 
-app.get("/tasks", (req, res) =>{
-    res.json([])
- })
  
 
 export default app
