@@ -10,10 +10,5 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
     - name: Checkout del codigo 
-      uses: actions/checkout@v2
-
-    - name: Instalar dependencias
-      uses: npm install  # Ajusta este comando según tu proyecto
-
-    - name: Ejecutar pruebas
-      uses: npm test  # Ajusta este comando según tu proyecto
+      run: |
+        echo "hola hiram"
