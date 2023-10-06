@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest --detectOpenHandles"
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest --detectOpenHandles",
+    "build": "babel src -d dist"
   },
   "keywords": [],
   "author": "",
