@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Instalar dependencias
-      uses: npm install  # Ajusta este comando según tu proyecto
+      run: npm install  # Ajusta este comando según tu proyecto
 
     - name: Ejecutar pruebas
-      uses: npm test  # Ajusta este comando según tu proyecto
+      run: npm test  # Ajusta este comando según tu proyecto
