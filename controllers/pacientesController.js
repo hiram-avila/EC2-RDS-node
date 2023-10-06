@@ -27,12 +27,11 @@ const registrarPaciente = async (req, res) => {
     }
   };
 
-    const iniciarSesion = async (req, res) => {
-        const { correo, contrasena } = req.body;
+ const iniciarSesion = async (req, res) => {
     
-        console.log(correo, contrasena);
-        
-        try {
+     const { correo, contrasena } = req.body;
+            
+    try {
         // Buscar al usuario en la base de datos por su correo electrónico
         const sql = 'SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?';
         const result = await db.query(sql, [correo]);
@@ -42,8 +41,6 @@ const registrarPaciente = async (req, res) => {
         }
     
         const usuario = await result[0]; // Obtén el primer resultado
-        console.log('estoy en usuario')
-        console.log(usuario);
         const contrasenaValida = await bcrypt.compare(contrasena, usuario[0].contrasena);
     
         if (contrasenaValida) {
@@ -62,7 +59,7 @@ const registrarPaciente = async (req, res) => {
         console.error('Error al autenticar al usuario:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
         }
-    };
+};
 
 
 const eliminarUsuario = (req, res) => {

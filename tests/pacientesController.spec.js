@@ -3,18 +3,6 @@ import request from 'supertest';
 
 describe('PacienteController', () => {
 
-  // test('POST /ruta_de_registro_paciente should respond with a 200 status code', async () => {
-  //   const response = await request(app)
-  //     .post('/pacientes/registro')
-  //     .send({
-  //       nombre: 'vallo',
-  //       correo: 'vallo@',
-  //       contrasena: '123456',
-  //       edad: 23
-  //     });
-  //   expect(response.statusCode).toBe(200);
-  // });
-
   test('debería autenticar a un usuario válido', async () => {
     // Supongamos que tienes un usuario de prueba en tu base de datos de prueba
     const usuarioPrueba = {
