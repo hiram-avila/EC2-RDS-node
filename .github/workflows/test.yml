@@ -1,19 +1,27 @@
 name: Ejecutar pruebas
 
-on: 
+on:
   push:
     branches:
-      - main # Reemplaza 'main' con la rama principal de tu repositorio
+      - main
 
 jobs:
   Ejecutar_tests:
     runs-on: ubuntu-latest 
     steps:
-    - name: Checkout del codigo 
+    - name: Checkout del código 
       uses: actions/checkout@v2
+
+    - name: Instalar Node.js y NPM
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
 
     - name: Instalar dependencias
       run: npm install  # Ajusta este comando según tu proyecto
+
+    - name: Transpilar código con Babel
+      run: npm run build  # Ajusta este comando según tu proyecto (debería ejecutar Babel)
 
     - name: Ejecutar pruebas
       run: npm test  # Ajusta este comando según tu proyecto
