@@ -21,7 +21,7 @@ jobs:
       run: npm install  # Ajusta este comando según tu proyecto
 
     - name: Transpilar código con Babel
-      run: npm run build  # Ajusta este comando según tu proyecto (debería ejecutar Babel)
+      run: npx babel src -d dist # Ajusta este comando según tu proyecto (debería ejecutar Babel)
 
     - name: Ejecutar pruebas
       run: npm test  # Ajusta este comando según tu proyecto
