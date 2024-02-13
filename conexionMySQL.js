@@ -9,6 +9,6 @@ const db = await mysql.createConnection({
   port: 3306
 });
 
-// No es necesario llamar a db.connect() en este caso
+
 
 export default db;

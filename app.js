@@ -1,13 +1,18 @@
+// Importar módulos y configuraciones necesarias
 import express from 'express';
-import pacientesRoutes from './routes/pacientesRoutes.js'
+import pacientesRoutes from './routes/pacientesRoutes.js';
+
+// Inicializar la aplicación Express
 const app = express();
 
-app.use(express.json()); 
-app.use('/pacientes', pacientesRoutes); // Utiliza la importación correcta
+// Configuración de middleware para analizar las solicitudes entrantes en formato JSON
+app.use(express.json());
 
-// Resto de la configuración de Express...
+// Configuración de las rutas para el manejo de pacientes
+app.use('/pacientes', pacientesRoutes);
 
+// Configuración adicional de Express...
+// ...
 
- 
-
-export default app
+// Exportar la aplicación configurada
+export default app;
