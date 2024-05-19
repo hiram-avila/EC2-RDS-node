@@ -37,7 +37,7 @@ const getPacientes = async(req, res) => {
         if (pacientes.length > 0) {
             res.json({ pacientes }); // Devolver la lista de pacientes en formato JSON
         } else {
-           res.json({ message: 'No se encontraron los pacientes' }); // Manejo si no se encuentran pacientes
+           res.json({ message: 'No se encontraron pacientes' }); // Manejo si no se encuentran pacientes
         }
     } catch (error) {
         console.error('Error al obtener pacientes: ', error);
