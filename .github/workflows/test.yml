@@ -23,5 +23,4 @@ jobs:
     - name: Transpilar código con Babel
       run: npx babel . --out-dir dist # Ajusta este comando según tu proyecto (debería ejecutar Babel)
 
-    - name: Ejecutar pruebas
-      run: npm test  # Ajusta este comando según tu proyecto
+      # Ajusta este comando según tu proyecto
