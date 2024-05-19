@@ -37,7 +37,7 @@ const getPacientes = async(req, res) => {
         if (pacientes.length > 0) {
             res.json({ pacientes }); // Devolver la lista de pacientes en formato JSON
         } else {
-           res.json({ message: 'No se encontraron pacientes' }); // Manejo si no se encuentran pacientes
+           res.json({ message: 'No se encontraron los pacientes' }); // Manejo si no se encuentran pacientes
         }
     } catch (error) {
         console.error('Error al obtener pacientes: ', error);
@@ -47,40 +47,52 @@ const getPacientes = async(req, res) => {
 
 
 // Función para iniciar sesión de un paciente existente
-const iniciarSesion = async (req, res) => {
-  // Extrae correo y contraseña del cuerpo de la solicitud
+async function iniciarSesion(req, res) {
   const { correo, contrasena } = req.body;
 
   try {
-    // Busca al usuario en la base de datos por su correo electrónico
+    console.log('Iniciando búsqueda de usuario con correo:', correo);
     const sql = 'SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?';
-    const result = await db.query(sql, [correo]);
+    const [result] = await db.query(sql, [correo]);
 
-    // Comprueba si el usuario existe en la base de datos
+    // Verificar el resultado de la consulta
+    console.log('Resultado de la consulta:', result);
+
     if (!result || result.length === 0) {
+      console.log('Usuario no encontrado');
       return res.status(403).json({ message: 'Usuario no encontrado' });
     }
 
-    const usuario = await result[0]; // Obtiene el primer resultado
+    const usuario = result[0];
+    console.log('Usuario encontrado:', usuario);
+
+    if (!contrasena || !usuario.contrasena) {
+      console.log('Contraseña proporcionada o almacenada no definida');
+      return res.status(400).json({ error: 'Contraseña no proporcionada o almacenada incorrectamente' });
+    }
+
+    console.log('Contraseña proporcionada:', contrasena);
+    console.log('Contraseña almacenada:', usuario.contrasena);
+
     const contrasenaValida = await bcrypt.compare(contrasena, usuario.contrasena);
 
     if (contrasenaValida) {
-      // Las credenciales son válidas, genera un token de autenticación
       const token = jwt.sign({ id: usuario.id, nombre: usuario.nombre }, 'secreto', { expiresIn: '1h' });
-      console.log('me ejecuté');
+      console.log('Credenciales válidas, usuario logeado:', usuario.nombre);
       res.json({
         token,
         msg: 'usuario logeado'
       });
     } else {
-      // Credenciales inválidas
+      console.log('Credenciales inválidas');
       res.status(401).json({ error: 'Credenciales inválidas' });
     }
   } catch (error) {
     console.error('Error al autenticar al usuario:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
-};
+}
+
 
 // Función para eliminar un usuario específico
 const eliminarUsuario = (req, res) => {
