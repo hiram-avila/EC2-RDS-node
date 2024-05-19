@@ -2,8 +2,8 @@
 import mysql from 'mysql2/promise';
 
 
-async function conectarDB() {
-  const db = await mysql.createConnection({
+async function db() {
+  const database = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'root',
@@ -11,7 +11,7 @@ async function conectarDB() {
     port: 3306
   });
   
-  return db;
+  return database;
 }
 
-export default conectarDB;
+export default db;
