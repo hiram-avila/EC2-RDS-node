@@ -27,7 +27,7 @@ describe('PacienteController', () => {
     test('debería autenticar a un usuario válido', async () => {
         // Supongamos que tienes un usuario de prueba en tu base de datos de prueba
         const usuarioPrueba = {
-          correo: 'zaira',
+          correo: 'test@gmail.com',
           contrasena: '123456',
         };
         // Realiza una solicitud POST simulada a la ruta de inicio de sesión
