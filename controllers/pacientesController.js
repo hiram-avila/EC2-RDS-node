@@ -1,19 +1,14 @@
-// Importa el módulo 'db' desde conexionMySQL.js para realizar operaciones en la base de datos
 import db from '../conexionMySQL.js';
-import bcrypt from 'bcrypt'; // Importa el módulo bcrypt para el hashing de contraseñas
-import jwt from 'jsonwebtoken'; // Importa el módulo jwt si estás utilizando ES6 modules
+import bcrypt from 'bcrypt'; 
+import jwt from 'jsonwebtoken'; 
 
-// Función para registrar un nuevo paciente
 const registrarPaciente = async (req, res) => {
     try {
-        // Extrae los datos del cuerpo de la solicitud
         const { nombre, correo, edad, contrasena } = req.body;
 
-        // Genera un salt y encripta la contraseña de forma asincrónica
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(contrasena, salt);
 
-        // Inserta el usuario en la base de datos con la contraseña encriptada
         const sql = 'INSERT INTO usuarios (nombre, correo, edad, contrasena) VALUES (?, ?, ?, ?)';
         const values = [nombre, correo, edad, hash];
 
@@ -29,15 +24,13 @@ const registrarPaciente = async (req, res) => {
 
 const getPacientes = async(req, res) => {
     try {
-        // Realizar una consulta para obtener todos los pacientes de la base de datos
         const sql = 'SELECT * FROM usuarios';
         const pacientes = await db.query(sql);
 
-        // Verificar si se encontraron pacientes
         if (pacientes.length > 0) {
-            res.json({ pacientes }); // Devolver la lista de pacientes en formato JSON
+            res.json({ pacientes }); 
         } else {
-           res.json({ message: 'No se encontraron pacientes' }); // Manejo si no se encuentran pacientes
+           res.json({ message: 'No se encontraron pacientes' }); 
         }
     } catch (error) {
         console.error('Error al obtener pacientes: ', error);
