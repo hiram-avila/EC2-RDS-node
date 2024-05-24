@@ -8,8 +8,9 @@ const db = await mysql.createConnection({
   password: 'root',
   database: 'registrousuarios',
   port: 3306
+
 });
 
-
+console.log("conexion exitosa")
 
 export default db;
