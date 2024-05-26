@@ -10,7 +10,7 @@ router.delete('/usuarios/:id', eliminarUsuario);
 
 router.get('/pacientes', getPacientes);
 router.get('/', (req, res) => {
-    res.json({message: 'prueba'});
+    res.json({message: 'test'});
 });
 
 export default router;
