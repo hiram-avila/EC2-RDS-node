@@ -1,0 +1,23 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2
+        run: |
+          ssh ec2-user@ec2-3-22-95-109.us-east-2.compute.amazonaws.com << 'EOF'
+          cd /home/ec2-user/tu-repositorio
+          git pull
+          docker build -t aws-test-1 .
+          docker run -d -p 3000:3000 aws-test-1
+          EOF
