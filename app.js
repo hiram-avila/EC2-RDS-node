@@ -1,4 +1,4 @@
-import express from 'express';
+    import express from 'express';
 import pacientesRoutes from './routes/pacientesRoutes.js';
 
 const app = express();

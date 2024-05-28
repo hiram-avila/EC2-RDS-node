@@ -15,7 +15,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh ec2-user@ec2-3-22-95-109.us-east-2.compute.amazonaws.com << 'EOF'
+          ssh -i /path/to/your-key.pem ec2-user@ec2-3-22-95-109.us-east-2.compute.amazonaws.com << 'EOF'
           cd /home/ec2-user/tu-repositorio
           git pull
           docker build -t aws-test-1 .
