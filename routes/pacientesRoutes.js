@@ -9,8 +9,9 @@ router.post('/inicio', iniciarSesion);
 router.delete('/usuarios/:id', eliminarUsuario);
 
 router.get('/pacientes', getPacientes);
+
 router.get('/', (req, res) => {
-    res.json({message: 'test'});
+    res.json({message: 'pendejo'});
 });
 
 export default router;
