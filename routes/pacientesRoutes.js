@@ -11,7 +11,7 @@ router.delete('/usuarios/:id', eliminarUsuario);
 router.get('/pacientes', getPacientes);
 
 router.get('/', (req, res) => {
-    res.json({message: 'errores corregidos'});
+    res.json({message: 'errores corregidos en test'});
 });
 
 export default router;
