@@ -10,14 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Deploy to EC2
-        run: |
-          ssh -i /path/to/your-key.pem ec2-user@ec2-3-22-95-109.us-east-2.compute.amazonaws.com << 'EOF'
-          cd /home/ec2-user/tu-repositorio
-          git pull
-          docker build -t aws-test-1 .
-          docker run -d -p 3000:3000 aws-test-1
-          EOF
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          cd /home/ec2-user/api-sql  
+          git pull origin main
+          docker build -t my-node-app:latest .  
+          docker stop my-node-container 
+          docker rm my-node-container || true  
+          docker run -d --name my-node-container -p 80:3000 my-node-app:latest  
+
+    - name: Run test
+      run: npm test
