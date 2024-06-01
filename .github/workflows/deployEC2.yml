@@ -25,13 +25,13 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/ec2-user/api-sql  
-          git pull origin main
-          docker build -t my-node-app:latest .  
-          docker stop my-node-container 
-          docker rm my-node-container || true  
-          docker run -d --name my-node-container -p 80:3000 my-node-app:latest  
-
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ec2-user/api-sql  
+            git pull origin main
+            docker build -t my-node-app:latest .  
+            docker stop my-node-container || true 
+            docker rm my-node-container || true  
+            docker run -d --name my-node-container -p 80:3000 my-node-app:latest  
+          EOF
     - name: Run test
       run: npm test
