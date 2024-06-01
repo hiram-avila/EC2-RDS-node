@@ -11,7 +11,7 @@ router.delete('/usuarios/:id', eliminarUsuario);
 router.get('/pacientes', getPacientes);
 
 router.get('/', (req, res) => {
-    res.json({message: 'la rueba se ha  realizada con exito!'});
+    res.json({message: 'la rueba se ha  realizada con exito!!'});
 });
 
 export default router;
