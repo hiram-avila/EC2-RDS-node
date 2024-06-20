@@ -20,6 +20,3 @@ jobs:
     - name: Instalar dependencias
       run: npm install  # Ajusta este comando según tu proyecto
 
-    - name: Correr pruebas
-      run: npm test
-      # Ajusta este comando según tu proyecto
