@@ -3,8 +3,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'; 
 
 const registrarPaciente = async (req, res) => {
-  
+
     try {
+      
         const { nombre, correo, edad, contrasena } = req.body;
 
         const salt = await bcrypt.genSalt(10);
