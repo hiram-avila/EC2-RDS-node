@@ -18,5 +18,8 @@ jobs:
         node-version: 14
 
     - name: Instalar dependencias
-      run: npm install  # Ajusta este comando según tu proyecto
+      run: npm install  
 
+    - name: Correr pruebas
+      run: npm test
+      
