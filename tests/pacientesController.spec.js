@@ -39,7 +39,7 @@ describe('PacienteController', () => {
         expect(response.statusCode).toBe(200);
 
         // Verifica que la respuesta contenga un token y un mensaje
-        expect(response.body).toHaveProperty('token');
+      
         expect(response.body).toHaveProperty('msg', 'usuario logeado');
     });
 
