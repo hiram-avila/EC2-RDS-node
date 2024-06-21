@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    res.send({message: 'errores corregidos en web'});
+    res.json({message: 'errores corregidos en web'});
 });
 
 export default router;
