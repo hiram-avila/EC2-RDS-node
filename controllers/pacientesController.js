@@ -2,7 +2,27 @@ import db from '../conexionMySQL.js';
 import bcrypt from 'bcrypt'; 
 import jwt from 'jsonwebtoken'; 
 
+const registrarPaciente = async (req, res) => {
 
+    try {
+      
+        const { nombre, correo, edad, contrasena } = req.body;
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(contrasena, salt);
+
+        const sql = 'INSERT INTO usuarios (nombre, correo, edad, contrasena) VALUES (?, ?, ?, ?)';
+        const values = [nombre, correo, edad, hash];
+
+        await db.query(sql, values);
+
+        console.log('Paciente registrado con éxito');
+        res.json({ message: 'Paciente registrado con éxito' });
+    } catch (error) {
+        console.error('Error al registrar al paciente: ', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
 
 const getPacientes = async(req, res) => {
     try {
