@@ -24,6 +24,21 @@ const registrarPaciente = async (req, res) => {
     }
 };
 
+const getPacientes = async(req, res) => {
+    try {
+        const sql = 'SELECT * FROM usuarios';
+        const pacientes = await db.query(sql);
+
+        if (pacientes.length > 0) {
+            res.json({ pacientes }); 
+        } else {
+           res.json({ message: 'No se encontraron pacientes' }); 
+        }
+    } catch (error) {
+        console.error('Error al obtener pacientes: ', error);
+        res.status(500).json({ error: 'Error interno del servidor al obtener pacientes' });
+  }
+}
 
 
 // Función para iniciar sesión de un paciente existente
