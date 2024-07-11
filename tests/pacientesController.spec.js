@@ -1,5 +1,4 @@
-import app from '../app'; // Asegúrate de importar tu aplicación express o servidor
-import request from 'supertest';
+
 
 describe('PacienteController', () => {
   const sum = (a, b) => a + b;
