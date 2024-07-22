@@ -41,7 +41,6 @@ const getPacientes = async(req, res) => {
 }
 
 
-// Función para iniciar sesión de un paciente existente
 async function iniciarSesion(req, res) {
   const { correo, contrasena } = req.body;
 
@@ -50,7 +49,7 @@ async function iniciarSesion(req, res) {
     const sql = 'SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?';
     const [result] = await db.query(sql, [correo]);
 
-    // Verificar el resultado de la consulta
+    
     console.log('Resultado de la consulta:', result);
 
     if (!result || result.length === 0) {
@@ -88,10 +87,8 @@ async function iniciarSesion(req, res) {
   }
 }
 
-
-// Función para eliminar un usuario específico
 const eliminarUsuario = (req, res) => {
-    const { id } = req.params; // Captura el ID desde los parámetros de la URL
+    const { id } = req.params; 
     const sql = 'DELETE FROM usuarios WHERE id = ?';
   
     db.query(sql, [id], (err, result) => {
@@ -110,8 +107,6 @@ const eliminarUsuario = (req, res) => {
   };
 
 
-
-// Exporta las funciones directamente en lugar de un objeto
 export { registrarPaciente,
          eliminarUsuario,
           iniciarSesion,
