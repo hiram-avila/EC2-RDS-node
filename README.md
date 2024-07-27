@@ -35,6 +35,7 @@
 ## Architecture
 ![image](https://github.com/user-attachments/assets/436db18b-34ea-4815-9ec9-940f53a58ce0)
 
+
 ## Requisitos Previos
 
 - Node.js instalado
