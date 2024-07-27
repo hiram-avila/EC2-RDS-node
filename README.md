@@ -32,6 +32,9 @@
 - ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
 - ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white) 
 
+## Architecture
+![image](https://github.com/user-attachments/assets/436db18b-34ea-4815-9ec9-940f53a58ce0)
+
 ## Requisitos Previos
 
 - Node.js instalado
